@@ -114,5 +114,3 @@ Relação: **One-to-Many (Genre → Game)**
 ## Autor
 
 Lucas Aguiar Garcia
-
-Estudante de Ciência da Computação — USP
