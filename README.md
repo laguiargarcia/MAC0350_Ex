@@ -54,15 +54,16 @@ Exemplo de registro de jogo:
 game-ranker/
 │
 ├── frontend/
-│   ├── index.html
-│   ├── styles.css
-│   └── script.js
+│ ├── index.html
+│ ├── styles.css
+│ └── script.js
 │
 ├── backend/
-│   └── main.py
+│ └── main.py
 │
 ├── models/
-│   └── game.py
+│ ├── game.py
+│ └── genre.py
 │
 └── README.md
 ```
@@ -82,7 +83,7 @@ Backend
 
 Banco de dados
 
-- SQL (ex: SQLite ou PostgreSQL)
+- SQL
 
 ## Modelo de Dados
 
