@@ -84,38 +84,6 @@ Banco de dados
 
 - SQL (ex: SQLite ou PostgreSQL)
 
----
-
-## Como executar o projeto
-
-### Clonar o repositório
-
-git clone https://github.com/seu-usuario/game-ranker.git
-cd game-ranker
-
-### Criar ambiente virtual
-
-python -m venv venv
-source venv/bin/activate
-
-Windows:
-
-venv\Scripts\activate
-
-### Instalar dependências
-
-pip install fastapi uvicorn
-
-### Executar o servidor
-
-uvicorn main:app --reload
-
-O backend estará disponível em:
-
-http://localhost:8000
-
----
-
 ## Modelo de Dados
 
 ### Game
