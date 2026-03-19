@@ -1,6 +1,6 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
-from typing import Optional
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -12,7 +12,7 @@ HTML = """<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/htmx-ext-json-enc@2.0.1/json-enc.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/json-enc.js"></script>
     <title>Requests</title>
     <style>
         body {
@@ -51,7 +51,7 @@ HTML = """<!DOCTYPE html>
         }
 
         #json-insert {
-            color: #aa690a;
+            color: #ff690a;
             font-size: xx-large;
         }
 
@@ -131,9 +131,9 @@ HTML = """<!DOCTYPE html>
         </form>
         <hr>
         <input type="number"
+            name="index"
             hx-get="/users"
             hx-trigger="input changed"
-            hx-vals="js:{index: event.target.value}"
             hx-target="#json-insert"
             hx-swap="innerHTML"
             placeholder="Índice do usuário">
@@ -159,25 +159,24 @@ HTML = """<!DOCTYPE html>
 </html>"""
 
 
-@app.get("/", response_class=HTMLResponse)
-def get_page():
-    return HTML
-
-from pydantic import BaseModel
-
 class UserModel(BaseModel):
     nome: str
     idade: int
 
 
+@app.get("/", response_class=HTMLResponse)
+async def get_page():
+    return HTML
+
+
 @app.post("/users")
-def create_user(user: UserModel):
+async def create_user(user: UserModel):
     users.append({"nome": user.nome, "idade": user.idade})
     return {"mensagem": "Usuário adicionado com sucesso", "usuario": user}
 
 
 @app.get("/users")
-def get_users(index: int | None = Query(default=None)):
+async def get_users(index: int | None = None):
     if index is None:
         return users
     if index < 0 or index >= len(users):
@@ -186,6 +185,6 @@ def get_users(index: int | None = Query(default=None)):
 
 
 @app.delete("/users")
-def delete_users():
+async def delete_users():
     users.clear()
     return {"mensagem": "Lista de usuários apagada com sucesso"}
